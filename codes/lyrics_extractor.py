@@ -80,7 +80,7 @@ artist_name = arguments.artist
 
 print(f'Start to download {artist_name} lyrics in {path}/{artist_name} folder')
 
-links = make_lyrics_link('coldplay')
+links = make_lyrics_link(artist_name)
 
 # save lyrics into files
 save_lyrics(links,path='../data/')
