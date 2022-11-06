@@ -3,7 +3,7 @@ import re
 import os
 import time
 import argparse
-import numpy as np
+import string
 from bs4 import BeautifulSoup
 
 
@@ -40,18 +40,20 @@ def save_lyrics(links,path):
                   'sec-fetch-dest': 'document',
                   'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
                   }
-        t = np.random.randint(50)
-        time.sleep(t)          
+
+        t = 10
+        time.sleep(t)       
         response = requests.get(url,headers=headers)
         lyric_html = response.text 
         lyric_soup = BeautifulSoup(lyric_html,'html.parser')
-        artist_name = lyric_soup.find('b').get_text()
-        artist_name = artist_name.replace(' Lyrics','').replace(' ','_')
-        
-        song_name = lyric_soup.find_all('b')[1].get_text().replace(' ','_').replace('"','').lower()
+        artist_name = url.split('/')[4]
+
+
+        song_name = lyric_soup.find_all('b')[1].get_text().lower()
+        song_name = song_name.translate(str.maketrans('', '' ,string.punctuation)).replace(' ', '_')
         lyric_text = lyric_soup.find_all('div')[22].get_text()
         
-        
+       
         
         if not os.path.exists(f"{path}/{artist_name}"):
             os.mkdir(f"{path}/{artist_name}")
@@ -60,9 +62,10 @@ def save_lyrics(links,path):
             file = open(file=f"{path}/{artist_name}/{song_name}.txt",mode='w')
             file.write(lyric_text)
             file.close()
-            print(f'{song_name} from {artist_name} has been saved.')
+            print(f'{i+1} {song_name} from {artist_name} has been saved.')
+            
         else:
-            print(f'{song_name} from {artist_name} has already been saved.')
+            print(f'{i+1} {song_name} from {artist_name} has already been saved.')
 
 # Build parser with ArgumentParser: parse the command line
 parser = argparse.ArgumentParser(description="""This script save the given artist lyrics in the given path """)
@@ -83,4 +86,4 @@ print(f'Start to download {artist_name} lyrics in {path}/{artist_name} folder')
 links = make_lyrics_link(artist_name)
 
 # save lyrics into files
-save_lyrics(links,path='../data/')
+save_lyrics(links,path=path)
