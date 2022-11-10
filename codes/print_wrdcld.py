@@ -36,21 +36,22 @@ def transform_val(val):
 
 def create_wordcloud(artist, txt, msk=None, font_color='black'):
     
-    cloud = WordCloud(background_color="white",
+    cloud = WordCloud(background_color=None,
+                    mode = 'RGBA',
                     max_words=200,
                     min_font_size=1,
-                    width=400, height=400,
+                    width=300, height=300,
                     mask=msk,
                     contour_width=0, contour_color='black',
                     collocations=False,  # calculates frequencies
                      ).generate(txt)
                     # stop words are removed!
     
-    plt.figure(figsize = (12,12))
+    plt.figure(figsize = (8,8))
     plt.imshow(cloud.recolor(color_func=lambda *args, **kwargs: font_color), interpolation='bilinear')
     plt.axis("off")
-    plt.savefig(f'{output}.png')
-    plt.show()
+    plt.savefig(f'{output}.png',transparent=True)
+    #plt.show()
 
 # Build parser with ArgumentParser: parse the command line
 parser = argparse.ArgumentParser(description="""This script create a fancy word cloud from lyrics""")
