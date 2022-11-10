@@ -8,7 +8,7 @@
 
 - Wrote another script with a command line interface for creating **fancy word cloud** from lyrics
 
-![word cloud](./figures/coldplay.png)
+![word cloud](./images/coldplay.png)
 
 Figure: Angel wings shaped word cloud of 100 most used words in lyrics for Coldplay
 
