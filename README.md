@@ -12,5 +12,4 @@
 
 Figure: Angel wings shaped word cloud of 100 most used words in lyrics for Coldplay
 
-## Usage
 
